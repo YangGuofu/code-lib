@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+
+
+</head>
+<body>
+
+
+</body>
+
+<script>
+
+    function doAction(action) {
+        var actions = {
+            'aaa': function () {
+                return 'aaa';
+            },
+            'bbb': function () {
+                return 'bbb';
+            },
+            'ccc': function () {
+                return 'ccc';
+            }
+        }
+        return actions[action]();
+    }
+    console.log(doAction('ccc'));
+
+</script>
+
+
+</html>
