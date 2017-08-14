@@ -1,0 +1,15 @@
+@for $size from 1 to 3 {
+  @each $direction in left, right, top, bottom,horizontal,vertical {
+    .padding-#{$direction}-#{$size} {
+      @if( $direction == 'horizontal'){
+        padding-left: #{$size*1}em;
+        padding-right: #{$size*1}em;
+      } @else if( $direction == 'vertical'){
+        padding-top: #{$size*1}em;
+        padding-bottom: #{$size*1}em;
+      } @else {
+        padding-#{$direction} : #{$size*1}em;
+      }
+    }
+  }
+}

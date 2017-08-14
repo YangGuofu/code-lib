@@ -1,0 +1,50 @@
+/* import */
+@import "modules/paddings";
+@import "modules/functions";
+
+
+/* mixin */
+@mixin font-title($size: 1em) {
+  font-weight: bold;
+  font-size: $size;
+  line-height: $size;
+}
+
+/* elllipse */
+.ellipse {
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+
+.title-type-sm {
+  @extend .ellipse;
+  @include font-title(2em);
+}
+.title-type-lg {
+  @extend .ellipse;
+  @include font-title(3em);
+}
+
+/* colors */
+$primary : #666666;
+.primary-light {
+  color: lighten($primary, 20%);
+}
+.primary-dark {
+  color: darken($primary, 20%);
+}
+
+.primary-close-to {
+  @if(lightness($primary) < 50%){
+    color: #000;
+  } @else {
+    color: #fff;
+  }
+}
+
+/* my function */
+$font-size-base : 1em;
+.font-size-double {
+  font-size: double($font-size-base);
+}
