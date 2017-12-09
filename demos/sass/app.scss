@@ -1,29 +1,53 @@
-/* import */
+@charset "utf-8";
+/* import 导入其他文件 */
 @import "modules/paddings";
+@import "modules/grid";
 @import "modules/functions";
+/*
+如果需要导入 SCSS 或者 Sass 文件，但又不希望将其编译为 CSS
+只需要在文件名前添加下划线，这样会告诉 Sass 不要编译这些文件
+可是为什么还会编译
+*/
+@import "modules/partials";
+/* 变量定义 */
+$public: 1em;
+$default: "first";
+$default: "second" !default;
+.variable {
+  $private: 2em;
+  /* 将变量扩展到全局 */
+  $private-to-global: 3em!global;
+  /* 如果有默认值则使用默认值 否贼使用新值 */
+  content: $default;
+}
 
-
-/* mixin */
+/* mixin 定义代码块 通过@incluce使用 */
 @mixin font-title($size: 1em) {
   font-weight: bold;
   font-size: $size;
   line-height: $size;
 }
-
-/* elllipse */
+/* 占位符选择器 @extend-Only */
+%bg-blue{
+  background-color: blue;
+}
+/* elllipse 基础类 其他类可通过extend继承他 */
 .ellipse {
   overflow: hidden;
   text-overflow:ellipsis;
   white-space: nowrap;
 }
 
+/* 应用可传参数 */
 .title-type-sm {
   @extend .ellipse;
   @include font-title(2em);
+  @extend %bg-blue;
 }
 .title-type-lg {
   @extend .ellipse;
   @include font-title(3em);
+  @extend %bg-blue;
 }
 
 /* colors */
@@ -35,6 +59,7 @@ $primary : #666666;
   color: darken($primary, 20%);
 }
 
+/* if else */
 .primary-close-to {
   @if(lightness($primary) < 50%){
     color: #000;
@@ -42,9 +67,128 @@ $primary : #666666;
     color: #fff;
   }
 }
-
-/* my function */
-$font-size-base : 1em;
+/* 使用自定义函数 */
 .font-size-double {
-  font-size: double($font-size-base);
+  font-size: double(1em);
+}
+
+/* 嵌套 */
+li >, ul > {
+  a {
+    color: #eeeeee;
+    /* 父选择器 */
+    &:hover,&:focus {
+      color: #eeeeee;
+    }
+  }
+}
+/* 类嵌套 */
+.article {
+  color: #fff;
+  &-content {
+    color: blue;
+  }
+  &-time {
+    color: #eeeeee;
+  }
+}
+
+/* 数组 */
+.list {
+  /* 数组由逗号或空格分割 */
+  margin: (1px 1px 1px null);
+  padding: (1px 1px) (() 1px);
+}
+
+/* 运算 */
+.p {
+  $translucent-red: rgba(255, 0, 0, 0.5);
+  /* 自动转换单位 */
+  width: 1in + 1px;
+
+  /* 分段计算 */
+  color: #222222 * 6;
+
+  /* 透明度计算 */
+  background-color: opacify($translucent-red, 0.25);
+  border-color: transparentize($translucent-red, 0.7);
+
+  /* 表达式与其他值连用 */
+  margin: 1px + 2px auto;
+
+  /* 布尔运算 */
+  $true: 1;
+  $false: 0;
+  opacity: $true or $false;
+}
+
+/* HLS css内容 */
+.hls {
+  /* H hue色相 每60一个色 红黄绿青蓝紫 */
+  /* S saturation饱和度 不灰度 */
+  /* L lightness亮度 0黑 1白 */
+  color: hsl(0, 100%, 50%);
+  /* 关键词参数 */
+  background-color: hsl($lightness: 50%, $saturation: 100%, $hue: 0);
+}
+
+/* @media */
+.hidden-xs {
+  @media (max-width: 767px){
+    display: none;
+  }
+}
+
+/* 合并列选择器 */
+/*ul > li > a {
+  text-decoration: none;
+}
+.article-list a{
+  @extend a;
+  color: #eeeeee;
+}*/
+
+/* @at-root */
+.parent {
+  @media (max-width: 767px) {
+    @at-root (without: media){
+      color: yellow;
+    }
+    @at-root {
+      .child {
+        color: red;
+      }
+    }
+  }
+}
+
+/* debug waring */
+@debug 1em + 2em;
+.warning {
+  @warn "waring!";
+  color: red;
+}
+
+/* 高级mixin */
+$colors: red, blue;
+@mixin link-colors($text, $background){
+  color: $text;
+  background-color: $background;
+}
+.primary {
+  /* 导入mixin */
+  /* ... 使用参数列表 */
+  @include link-colors($colors...)
+}
+
+/* 向混合样式中导入内容（要个爸爸） */
+@mixin parent {
+  .parent {
+    @content
+  }
+}
+@include parent {
+  .child {
+    color: red;
+  }
 }

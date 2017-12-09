@@ -1,4 +1,5 @@
-/* import */
+@charset "UTF-8";
+/* import 导入其他文件 */
 .padding-left-1 {
   padding-left: 1em; }
 
@@ -39,13 +40,72 @@
   padding-top: 2em;
   padding-bottom: 2em; }
 
-/* mixin */
-/* elllipse */
+.col-xs-1 {
+  position: relative;
+  min-height: 1px;
+  width: 8.3333333333%; }
+
+.col-sm-1 {
+  position: relative;
+  min-height: 1px;
+  width: 8.3333333333%; }
+
+.col-md-1 {
+  position: relative;
+  min-height: 1px;
+  width: 8.3333333333%; }
+
+.col-lg-1 {
+  position: relative;
+  min-height: 1px;
+  width: 8.3333333333%; }
+
+.col-xs-2 {
+  position: relative;
+  min-height: 1px;
+  width: 16.6666666667%; }
+
+.col-sm-2 {
+  position: relative;
+  min-height: 1px;
+  width: 16.6666666667%; }
+
+.col-md-2 {
+  position: relative;
+  min-height: 1px;
+  width: 16.6666666667%; }
+
+.col-lg-2 {
+  position: relative;
+  min-height: 1px;
+  width: 16.6666666667%; }
+
+/*
+如果需要导入 SCSS 或者 Sass 文件，但又不希望将其编译为 CSS
+只需要在文件名前添加下划线，这样会告诉 Sass 不要编译这些文件
+可是为什么还会编译
+*/
+.partials {
+  width: 2px; }
+
+/* 变量定义 */
+.variable {
+  /* 将变量扩展到全局 */
+  /* 如果有默认值则使用默认值 否贼使用新值 */
+  content: "first"; }
+
+/* mixin 定义代码块 通过@incluce使用 */
+/* 占位符选择器 @extend-Only */
+.title-type-sm, .title-type-lg {
+  background-color: blue; }
+
+/* elllipse 基础类 其他类可通过extend继承他 */
 .ellipse, .title-type-sm, .title-type-lg {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap; }
 
+/* 应用可传参数 */
 .title-type-sm {
   font-weight: bold;
   font-size: 2em;
@@ -63,11 +123,91 @@
 .primary-dark {
   color: #333333; }
 
+/* if else */
 .primary-close-to {
   color: #000; }
 
-/* my function */
+/* 使用自定义函数 */
 .font-size-double {
   font-size: 2em; }
+
+/* 嵌套 */
+li > a, ul > a {
+  color: #eeeeee;
+  /* 父选择器 */ }
+  li > a:hover, li > a:focus, ul > a:hover, ul > a:focus {
+    color: #eeeeee; }
+
+/* 类嵌套 */
+.article {
+  color: #fff; }
+  .article-content {
+    color: blue; }
+  .article-time {
+    color: #eeeeee; }
+
+/* 数组 */
+.list {
+  /* 数组由逗号或空格分割 */
+  margin: 1px 1px 1px;
+  padding: 1px 1px 1px; }
+
+/* 运算 */
+.p {
+  /* 自动转换单位 */
+  width: 1.0104166667in;
+  /* 分段计算 */
+  color: #cccccc;
+  /* 透明度计算 */
+  background-color: rgba(255, 0, 0, 0.75);
+  border-color: rgba(255, 0, 0, 0);
+  /* 表达式与其他值连用 */
+  margin: 3px auto;
+  /* 布尔运算 */
+  opacity: 1; }
+
+/* HLS css内容 */
+.hls {
+  /* H hue色相 每60一个色 红黄绿青蓝紫 */
+  /* S saturation饱和度 不灰度 */
+  /* L lightness亮度 0黑 1白 */
+  color: red;
+  /* 关键词参数 */
+  background-color: red; }
+
+/* @media */
+@media (max-width: 767px) {
+  .hidden-xs {
+    display: none; } }
+
+/* 合并列选择器 */
+/*ul > li > a {
+  text-decoration: none;
+}
+.article-list a{
+  @extend a;
+  color: #eeeeee;
+}*/
+/* @at-root */
+.parent {
+  color: yellow; }
+@media (max-width: 767px) {
+  .child {
+    color: red; } }
+
+/* debug waring */
+.warning {
+  color: red; }
+
+/* 高级mixin */
+.primary {
+  /* 导入mixin */
+  /* ... 使用参数列表 */
+  color: red;
+  background-color: blue; }
+
+/* 向混合样式中导入内容（要个爸爸） */
+.parent .child {
+  color: red; }
 
 /*# sourceMappingURL=app.css.map */

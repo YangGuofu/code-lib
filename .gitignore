@@ -1,0 +1,3 @@
+/demos/designPatterns/vendor/*
+/demos/sass/.sass-cache
+.idea

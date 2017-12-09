@@ -1,0 +1,10 @@
+$screens: (xs, sm, md, lg);
+@for $column from 1 to 3 {
+  @each $screen in $screens {
+    .col-#{$screen}-#{$column} {
+      position: relative;
+      min-height: 1px;
+      width: (100% / 12 * $column);
+    }
+  }
+}
