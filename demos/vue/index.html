@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+
+</head>
+<body>
+
+<div id="app">
+    <h2>{{title}}</h2>
+    <ul id="todo-list">
+        <li is="todo-list"
+            :todos="todos"
+            :num="num"
+            class="parent-class"
+            v-on:increment="parentIncrement"
+        >
+
+        </li>
+    </ul>
+
+</div>
+
+<script type="text/x-template" id="template-todo-list">
+    <div class="self-class">
+        <li v-for="(todo, index) in todos">
+            <div>{{sb.name}} : <span>{{sb.age}}</span></div>
+            <div>{{index}}:{{todo.title}}</div>
+            <div>{{computedNum}}:{{num}}</div>
+            <div
+                v-bind:style="{cursor:'pointer',padding:10+'px'}"
+                @click="childIncrement">{{counter}}
+            </div>
+        </li>
+    </div>
+
+</script>
+
+
+</body>
+
+<script src="vue.js"></script>
+<script>
+    Vue.component("todo-list", {
+        template: "#template-todo-list",
+        props: {
+            todos: {
+                type: Array,
+                reduired: true,
+            },
+            sb: {
+                type: Object,
+                default: function () {
+                    return {
+                        name: "cpt",
+                        age: 24
+                    }
+                }
+            },
+            num: {
+
+            }
+        },
+        data: function () {
+            return {
+                counter: 0,
+            }
+        },
+        computed: {
+            computedNum: function () {
+                return this.counter += 1;
+            },
+        },
+        methods: {
+            childIncrement: function () {
+                this.counter += 1;
+                this.$emit("increment");
+            },
+        }
+    });
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            title: "Title",
+            todos: [
+                {title: "todo1"},
+                {title: "todo2"}
+            ],
+            sb: {
+                age: 14
+            },
+            num: 0
+        },
+        created: function (){
+
+        },
+        methods: {
+            parentIncrement: function () {
+                this.num += 1;
+            }
+        }
+    })
+
+
+</script>
+</html>
